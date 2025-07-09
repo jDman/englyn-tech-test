@@ -6,7 +6,7 @@
       <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">2</p>
     </div>
   </div>
-  @for (displayEvent of displayEvents; track $index) {
+  @for (displayEvent of currentEventsToDisplay; track $index) {
     <app-display-event class="flex w-full" [home]="displayEvent.home" [homeScore]="displayEvent.homeScore"
       [homeTeam]="displayEvent.homeTeam"
       [away]="displayEvent.away" [awayScore]="displayEvent.awayScore"

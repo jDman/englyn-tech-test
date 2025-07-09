@@ -29,15 +29,7 @@ export class SocketService {
 
     this.getInplayEvent().subscribe({
       next: (event) => {
-        console.log(event);
-
         this.setInplayDisplay(event.marketId, event);
-      }
-    })
-
-    this.getCompleteInplay().subscribe({
-      next: (inplayDisplay: InplayDisplayEvent) => {
-        console.log(inplayDisplay);
       }
     })
   }
@@ -50,6 +42,8 @@ export class SocketService {
       this.stompClient.subscribe('/topic/inplay', function (liveEvents: any) {
         that.inplayIdSubject.next(JSON.parse(liveEvents.body));
       });
+
+      this.stompClient.debug = () => {};
     });
   };
 
@@ -75,9 +69,8 @@ export class SocketService {
   setInplayDisplay(marketId: number, inplayEvent: InplayEvent) {
     if (this.isSocketConnected()) {
       this.stompClient.subscribe(`/topic/market/${marketId}`, (market: any) => {
-        const { id: eventId} = inplayEvent;
-        const updatedEvent = {...inplayEvent, eventId}
-        this.inplayCompleteSubject.next({...updatedEvent, ...JSON.parse(market.body)});
+        
+        this.inplayCompleteSubject.next({...JSON.parse(market.body), ...inplayEvent});
       })
     }
   }
