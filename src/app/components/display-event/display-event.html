@@ -1,0 +1,24 @@
+<div class="display-event flex w-full rounded-s-lg text-slate-50 text-xs sm:text-sm md:text-base
+bg-gradient-to-r from-emerald-500 to-emerald-800 mb-2">
+  <div class="event-info grid grid-cols-4 w-full">
+    <p class="px-2">
+      <span class="flex w-full justify-between">
+        <span class="py-2 md:px-4 sm:px-2 px-0">{{ homeTeam() }}</span>
+        <span class="py-2 md:px-4 sm:px-2 px-0">{{ homeScore() }}</span>
+      </span>
+      <span class="flex w-full justify-between">
+        <span class="py-2 md:px-4 sm:px-2 px-0">{{ awayTeam() }}</span>
+        <span class="py-2 md:px-4 sm:px-2 px-0">{{ awayScore() }}</span>
+      </span>
+    </p>
+    <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">
+      <span>{{ home() }}</span>
+    </p>
+    <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">
+      <span>{{ draw() }}</span>
+    </p>
+    <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">
+      <span>{{ away() }}</span>
+    </p>
+  </div>
+</div>

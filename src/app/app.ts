@@ -1,15 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { SocketService } from './services/socket';
+import { DisplayEvents } from './components/display-events/display-events';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [DisplayEvents],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnInit {
+  
 
-  constructor() {}
+  private socketService: SocketService = inject(SocketService)
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.socketService.getCompleteBookings().subscribe({
+    //   next: (bookings) => {
+    //     console.log(bookings);
+    //   }
+    // })
+  }
 }

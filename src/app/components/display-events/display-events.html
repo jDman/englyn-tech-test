@@ -1,0 +1,17 @@
+<div class="display-events w-full md:!w-lg lg:!w-2xl">
+  <div class="market-headers flex w-full mb-2">
+    <div class="market-result-headings w-full grid grid-cols-4 grid-rows-1 row-span-full">
+      <p class="col-start-2 flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">1</p>
+      <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">x</p>
+      <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">2</p>
+    </div>
+  </div>
+  @for (displayEvent of displayEvents; track $index) {
+    <app-display-event class="flex w-full" [home]="displayEvent.home" [homeScore]="displayEvent.homeScore"
+      [homeTeam]="displayEvent.homeTeam"
+      [away]="displayEvent.away" [awayScore]="displayEvent.awayScore"
+      [awayTeam]="displayEvent.awayTeam" [draw]="displayEvent.draw"
+    >
+    </app-display-event>
+  }
+</div>
