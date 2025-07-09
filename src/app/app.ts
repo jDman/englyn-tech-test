@@ -14,6 +14,8 @@ export class App implements OnInit {
   private socketService: SocketService = inject(SocketService)
 
   ngOnInit(): void {
+    this.socketService.connectSocket();
+
     // this.socketService.getCompleteBookings().subscribe({
     //   next: (bookings) => {
     //     console.log(bookings);
