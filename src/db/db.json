@@ -1,0 +1,97 @@
+{
+  "inplay": [{ "id": 10 }, { "id": 1 }, { "id": 2 }, { "id": 3 }, { "id": 4 }],
+  "event": [
+    {
+      "id": 1,
+      "homeTeam": "Chelsea",
+      "awayTeam": "Fulham",
+      "homeScore": 1,
+      "awayScore": 1,
+      "marketId": 101
+    },
+    {
+      "id": 2,
+      "homeTeam": "Everton",
+      "awayTeam": "Arsenal",
+      "homeScore": 5,
+      "awayScore": 2,
+      "marketId": 102
+    },
+    {
+      "id": 3,
+      "homeTeam": "Aston Villa",
+      "awayTeam": "Leicester",
+      "homeScore": 0,
+      "awayScore": 0,
+      "marketId": 103
+    },
+    {
+      "id": 4,
+      "homeTeam": "Brentford",
+      "awayTeam": "Southampton",
+      "homeScore": 1,
+      "awayScore": 1,
+      "marketId": 104
+    },
+    {
+      "id": 5,
+      "homeTeam": "Brighton",
+      "awayTeam": "Bournemouth",
+      "homeScore": 2,
+      "awayScore": 2,
+      "marketId": 105
+    },
+    {
+      "id": 6,
+      "homeTeam": "Manchester Utd",
+      "awayTeam": "Crystal Palace",
+      "homeScore": 1,
+      "awayScore": 4,
+      "marketId": 106
+    },
+    {
+      "id": 7,
+      "homeTeam": "Wolves",
+      "awayTeam": "Liverpool",
+      "homeScore": 6,
+      "awayScore": 3,
+      "marketId": 107
+    },
+    {
+      "id": 8,
+      "homeTeam": "Newcastle",
+      "awayTeam": "West Ham",
+      "homeScore": 2,
+      "awayScore": 2,
+      "marketId": 108
+    },
+    {
+      "id": 9,
+      "homeTeam": "Forrest",
+      "awayTeam": "Leeds",
+      "homeScore": 3,
+      "awayScore": 4,
+      "marketId": 109
+    },
+    {
+      "id": 10,
+      "homeTeam": "Spurs",
+      "awayTeam": "Man City",
+      "homeScore": 2,
+      "awayScore": 2,
+      "marketId": 110
+    }
+  ],
+  "market": [
+    { "id": 101, "home": "9.38", "draw": "11.10", "away": "13.25" },
+    { "id": 102, "home": "13.85", "draw": "9.00", "away": "10.08" },
+    { "id": 103, "home": "7.47", "draw": "4.90", "away": "5.80" },
+    { "id": 104, "home": "4.05", "draw": "3.70", "away": "5.50" },
+    { "id": 105, "home": "13.03", "draw": "12.10", "away": "18.35" },
+    { "id": 106, "home": "11.20", "draw": "10.90", "away": "16.65" },
+    { "id": 107, "home": "9.60", "draw": "16.00", "away": "11.45" },
+    { "id": 108, "home": "14.88", "draw": "11.60", "away": "12.95" },
+    { "id": 109, "home": "10.10", "draw": "15.45", "away": "9.30" },
+    { "id": 110, "home": "13.85", "draw": "8.30", "away": "9.55" }
+  ]
+}
