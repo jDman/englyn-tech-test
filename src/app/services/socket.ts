@@ -1,12 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, concat, from, mergeMap, Observable, ReplaySubject, toArray } from 'rxjs';
-import { InplayMarket } from '../interfaces/Market';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { InplayEvent } from '../interfaces/Event';
 import * as Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import { InplayDisplayEvent } from '../interfaces/DisplayEvent';
-
+import { InplayId } from '../interfaces/InplayId';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +15,11 @@ export class SocketService {
   private inplayIdSubject = new ReplaySubject<Array<{id: number}>>();
   private inplayEventSubject = new ReplaySubject<InplayEvent>();
   private inplayCompleteSubject = new ReplaySubject<InplayDisplayEvent>();
+  private isConnectedSubject = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.getInplayIds().subscribe({
-      next: (inplayIds) => {
+      next: (inplayIds: Array<InplayId>) => {
         inplayIds.forEach((inplayId) => {
           this.setInplayEvent(inplayId.id);
         })
@@ -34,12 +33,18 @@ export class SocketService {
     })
   }
 
+  get isConnected(): Observable<boolean> {
+    return this.isConnectedSubject.asObservable();
+  }
+
   connectSocket(): void {
     const socket = new SockJS(this.rootUrl);
     const that = this;
     this.stompClient = Stomp.over(socket);
     this.stompClient.connect({}, () => {
+      this.isConnectedSubject.next(true);
       this.stompClient.subscribe('/topic/inplay', function (liveEvents: any) {
+        console.log(JSON.parse(liveEvents.body));
         that.inplayIdSubject.next(JSON.parse(liveEvents.body));
       });
 
@@ -47,18 +52,30 @@ export class SocketService {
     });
   };
 
-  isSocketConnected(): boolean {
-    return this.stompClient && this.stompClient.connected;
-  }
-
- 
   disconnectSocket(): void {
     if (this.isSocketConnected()) {
       this.stompClient.disconnect();
+      this.isConnectedSubject.next(false);
     }
   }
 
-  setInplayEvent(id: number) {
+  getCompleteInplay(): Observable<InplayDisplayEvent> {
+    return this.inplayCompleteSubject.asObservable();
+  }
+
+  getInplayEvent(): Observable<InplayEvent> {
+    return this.inplayEventSubject.asObservable();
+  }
+
+  getInplayIds(): Observable<Array<InplayId>> {
+    return this.inplayIdSubject.asObservable();
+  }
+
+  private isSocketConnected(): boolean {
+    return this.stompClient && this.stompClient.connected;
+  }
+
+  private setInplayEvent(id: number) {
     if (this.isSocketConnected()) {
       this.stompClient.subscribe(`/topic/event/${id}`, (inplayEvent: any) => {
         this.inplayEventSubject.next(JSON.parse(inplayEvent.body));
@@ -66,24 +83,12 @@ export class SocketService {
     }
   }
 
-  setInplayDisplay(marketId: number, inplayEvent: InplayEvent) {
+  private setInplayDisplay(marketId: number, inplayEvent: InplayEvent) {
     if (this.isSocketConnected()) {
       this.stompClient.subscribe(`/topic/market/${marketId}`, (market: any) => {
         
         this.inplayCompleteSubject.next({...JSON.parse(market.body), ...inplayEvent});
       })
     }
-  }
-
-  getInplayIds(): Observable<Array<{ id: number }>> {
-    return this.inplayIdSubject.asObservable();
-  }
-
-  getInplayEvent(): Observable<InplayEvent> {
-    return this.inplayEventSubject.asObservable();
-  }
-
-  getCompleteInplay(): Observable<InplayDisplayEvent> {
-    return this.inplayCompleteSubject.asObservable();
   }
 }

@@ -3,7 +3,8 @@ import { InplayDisplayEvent } from '../../interfaces/DisplayEvent';
 import { DisplayEvent } from '../display-event/display-event';
 import { SocketService } from '../../services/socket';
 import { CommonModule } from '@angular/common';
-import { from, mergeMap, Observable, tap, toArray } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
+import { InplayId } from '../../interfaces/InplayId';
 
 @Component({
   selector: 'app-display-events',
@@ -13,47 +14,51 @@ import { from, mergeMap, Observable, tap, toArray } from 'rxjs';
 })
 export class DisplayEvents implements OnInit {
   private socketService: SocketService = inject(SocketService);
-  // public displayEvents: Array<InplayDisplayEvent> = [
-  //   {
-  //     id: 10,
-  //     eventId: 10,
-  //     homeTeam: "Spurs",
-  //     awayTeam: "Man City",
-  //     homeScore: 2,
-  //     awayScore: 2,
-  //     marketId: 110,
-  //     home: "13.85", 
-  //     draw: "8.30", 
-  //     away: "9.55"
-  //   },
-  //   {
-  //     id: 7,
-  //     eventId: 7,
-  //     homeTeam: "Wolves",
-  //     awayTeam: "Liverpool",
-  //     homeScore: 6,
-  //     awayScore: 3,
-  //     marketId: 107,
-  //     home: "9.60",
-  //     draw: "16.00",
-  //     away: "11.45"
-  //   }
-  // ];
-  public currentEventsToDisplay: Array<InplayDisplayEvent> = []
-  public current$!: Observable<InplayDisplayEvent>;
+  private currentEvent$!: Observable<InplayDisplayEvent>;
+  private currentIds$!: Observable<Array<InplayId>>;
+
+  public currentEventsToDisplay: Array<InplayDisplayEvent> = [];
 
   ngOnInit() {
-    this.current$ = this.socketService.getCompleteInplay();
-    this.socketService.getCompleteInplay().subscribe({
-      next: (completeInplay) => {
-        console.log(this.currentEventsToDisplay);
-        // this.currentEventsToDisplay = this.currentEventsToDisplay.map(displayEvent => {
-        //   return displayEvent.id === completeInplay.id ?
-        //     {...displayEvent, completeInplay} : completeInplay;
-        // }); 
-        
-        console.log(this.currentEventsToDisplay);
+    this.currentEvent$ = this.socketService.getCompleteInplay();
+    this.currentIds$ = this.socketService.getInplayIds();
+
+    combineLatest([this.currentEvent$, this.currentIds$])
+      .subscribe({
+        next: this.updateCurrentEventList.bind(this)
+      });
+    this.socketService.isConnected.subscribe({
+      next: (connected) => {
+        if (!connected) {
+          this.currentEventsToDisplay = [];
+        }
       }
     })
+  }
+
+  private filterOutdatedIds(inplayIds: Array<InplayId>): Array<InplayDisplayEvent> {
+    const filtered = [...this.currentEventsToDisplay.filter((currentEvent) => {
+      return inplayIds.findIndex(({id}) => currentEvent.id === id) > -1;
+    })];
+
+    return filtered;
+  }
+
+  private updateCurrentEventList(
+    [completeInplay, ids]: [InplayDisplayEvent, Array<InplayId>]): void {
+      console.log('PRE FILTER: ', this.currentEventsToDisplay);
+    let filteredCurrentEvents = this.filterOutdatedIds(ids);
+    const newEventInCurrentEventsListIndex = filteredCurrentEvents
+      .findIndex((currentEvent) => currentEvent.id === completeInplay.id);
+
+    if (newEventInCurrentEventsListIndex === -1) {
+      filteredCurrentEvents = [...filteredCurrentEvents, completeInplay];
+      console.log('FILTER: ', filteredCurrentEvents);
+
+    } else {
+      filteredCurrentEvents[newEventInCurrentEventsListIndex] = completeInplay;
+    }
+
+    this.currentEventsToDisplay = filteredCurrentEvents;
   }
 }

@@ -14,5 +14,4 @@ export class DisplayEvent {
   public awayTeam: InputSignal<string> = input('');
   public awayScore: InputSignal<number> = input(0);
   public draw: InputSignal<string> = input('');
-
 }

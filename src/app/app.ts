@@ -1,25 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { SocketService } from './services/socket';
+import { Component } from '@angular/core';
 import { DisplayEvents } from './components/display-events/display-events';
+import { Connection } from './components/connection/connection';
 
 @Component({
   selector: 'app-root',
-  imports: [DisplayEvents],
+  imports: [DisplayEvents, Connection],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
-  
-
-  private socketService: SocketService = inject(SocketService)
-
-  ngOnInit(): void {
-    this.socketService.connectSocket();
-
-    // this.socketService.getCompleteBookings().subscribe({
-    //   next: (bookings) => {
-    //     console.log(bookings);
-    //   }
-    // })
-  }
-}
+export class App {}
