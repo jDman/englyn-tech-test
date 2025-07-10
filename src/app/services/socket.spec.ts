@@ -130,7 +130,7 @@ describe('SocketService', () => {
   });
 
   it('should return false for isSocketConnected if stompclient exists and is disconnected', () => {
-    mockStompClient.connected = false;
+    service.disconnectSocket();
 
     expect(service.isSocketConnected()).toBeFalsy();
   });
