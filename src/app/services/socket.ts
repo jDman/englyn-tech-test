@@ -9,6 +9,7 @@ import { SocketSetupService } from './socket-setup';
   providedIn: 'root'
 })
 export class SocketService {
+  private rootUrl: string = "http://ec2-13-40-74-60.eu-west-2.compute.amazonaws.com:8080/sportsbook";
   private socketSetupSerivce = inject(SocketSetupService);
   private stompClient: any;
   private inplayIdSubject = new ReplaySubject<Array<{id: number}>>();
@@ -41,7 +42,7 @@ export class SocketService {
   }
 
   connectSocket(): void {
-    const socket = this.socketSetupSerivce.getNewSockRoot();
+    const socket = this.socketSetupSerivce.getNewSockRoot(this.rootUrl);
     this.stompClient = this.socketSetupSerivce.getStompClient(socket);
     this.stompClient.connect({}, () => {
       this.isConnectedSubject.next(true);
@@ -89,7 +90,7 @@ export class SocketService {
     });
   }
 
-  private isSocketConnected(): boolean {
+  isSocketConnected(): boolean {
     return this.stompClient && this.stompClient.connected;
   }
 }

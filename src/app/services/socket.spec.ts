@@ -122,4 +122,16 @@ describe('SocketService', () => {
 
     expect(mockStompClient.subscribe).toHaveBeenCalled();
   });
+
+  it('should return true for isSocketConnected if stompclient exists and is connected', () => {
+    service.connectSocket();
+
+    expect(service.isSocketConnected()).toBeTruthy();
+  });
+
+  it('should return false for isSocketConnected if stompclient exists and is disconnected', () => {
+    mockStompClient.connected = false;
+
+    expect(service.isSocketConnected()).toBeFalsy();
+  });
 });

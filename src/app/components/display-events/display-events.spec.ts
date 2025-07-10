@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DisplayEvents } from './display-events';
-import { InplayDisplayEvent } from '../../interfaces/DisplayEvent';
 import { SocketService } from '../../services/socket';
 import { of } from 'rxjs';
 import { DisplayEvent } from '../display-event/display-event';

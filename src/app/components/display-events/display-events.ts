@@ -5,6 +5,7 @@ import { SocketService } from '../../services/socket';
 import { CommonModule } from '@angular/common';
 import { combineLatest, Observable, of } from 'rxjs';
 import { InplayId } from '../../interfaces/InplayId';
+import { updateCurrentEventList } from './helpers/updateCurrentEventList';
 
 @Component({
   selector: 'app-display-events',
@@ -24,7 +25,7 @@ export class DisplayEvents implements OnInit {
 
     combineLatest([this.currentEvent$, this.currentIds$])
       .subscribe({
-        next: this.updateCurrentEventList.bind(this)
+        next: this.updateCurrentEvents.bind(this)
       });
     this.socketService.isConnected.subscribe({
       next: (connected) => {
@@ -35,27 +36,7 @@ export class DisplayEvents implements OnInit {
     })
   }
 
-  private filterOutdatedIds(inplayIds: Array<InplayId>): Array<InplayDisplayEvent> {
-    const filtered = [...this.currentEventsToDisplay.filter((currentEvent) => {
-      return inplayIds.findIndex(({id}) => currentEvent.id === id) !== -1;
-    })];
-
-    return filtered;
-  }
-
-  private updateCurrentEventList(
-    [completeInplay, ids]: [InplayDisplayEvent, Array<InplayId>]): void {
-    let filteredCurrentEvents = this.filterOutdatedIds(ids);
-    const newEventInCurrentEventsListIndex = filteredCurrentEvents
-      .findIndex((currentEvent) => currentEvent.id === completeInplay.id);
-    const existsInIds = ids.findIndex(({id}) => completeInplay.id === id) !== -1;
-
-    if (newEventInCurrentEventsListIndex === -1 && existsInIds) {
-      filteredCurrentEvents = [...filteredCurrentEvents, completeInplay];
-    } else if (newEventInCurrentEventsListIndex > -1 && existsInIds) {
-      filteredCurrentEvents[newEventInCurrentEventsListIndex] = completeInplay;
-    }
-
-    this.currentEventsToDisplay = filteredCurrentEvents;
+  private updateCurrentEvents([completeInplay, ids]: [InplayDisplayEvent, Array<InplayId>]) : void {
+    this.currentEventsToDisplay = updateCurrentEventList([completeInplay, ids], this.currentEventsToDisplay);
   }
 }

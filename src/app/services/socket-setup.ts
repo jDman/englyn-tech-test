@@ -6,12 +6,8 @@ import SockJS from 'sockjs-client';;
   providedIn: 'root'
 })
 export class SocketSetupService {
-  private rootUrl: string = "http://ec2-13-40-74-60.eu-west-2.compute.amazonaws.com:8080/sportsbook";
-
-  constructor() { }
-
-  getNewSockRoot(): any {
-    return new SockJS(this.rootUrl);
+  getNewSockRoot(url: string): any {
+    return new SockJS(url);
   }
 
   getStompClient(socket: any): any {
