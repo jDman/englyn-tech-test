@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-connection',
   imports: [CommonModule],
-  templateUrl: './connection.html',
-  styleUrl: './connection.css'
+  templateUrl: './connection.html'
 })
 export class Connection {
   private socketService: SocketService = inject(SocketService);

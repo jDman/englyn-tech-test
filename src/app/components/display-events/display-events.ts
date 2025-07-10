@@ -9,8 +9,7 @@ import { InplayId } from '../../interfaces/InplayId';
 @Component({
   selector: 'app-display-events',
   imports: [CommonModule, DisplayEvent],
-  templateUrl: './display-events.html',
-  styleUrl: './display-events.css'
+  templateUrl: './display-events.html'
 })
 export class DisplayEvents implements OnInit {
   private socketService: SocketService = inject(SocketService);

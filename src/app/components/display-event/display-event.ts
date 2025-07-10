@@ -3,8 +3,7 @@ import { Component, input, InputSignal } from '@angular/core';
 @Component({
   selector: 'app-display-event',
   imports: [],
-  templateUrl: './display-event.html',
-  styleUrl: './display-event.css'
+  templateUrl: './display-event.html'
 })
 export class DisplayEvent {
   public home: InputSignal<string> = input('');

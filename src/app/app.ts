@@ -5,7 +5,6 @@ import { Connection } from './components/connection/connection';
 @Component({
   selector: 'app-root',
   imports: [DisplayEvents, Connection],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  templateUrl: './app.html'
 })
 export class App {}
