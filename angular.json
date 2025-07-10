@@ -72,7 +72,8 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "global-shim.ts"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
@@ -83,7 +84,8 @@
             ],
             "styles": [
               "src/styles.css"
-            ]
+            ],
+            "karmaConfig": "karma.conf.js"
           }
         }
       }

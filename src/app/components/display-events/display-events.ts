@@ -45,15 +45,12 @@ export class DisplayEvents implements OnInit {
 
   private updateCurrentEventList(
     [completeInplay, ids]: [InplayDisplayEvent, Array<InplayId>]): void {
-      console.log('PRE FILTER: ', this.currentEventsToDisplay);
     let filteredCurrentEvents = this.filterOutdatedIds(ids);
     const newEventInCurrentEventsListIndex = filteredCurrentEvents
       .findIndex((currentEvent) => currentEvent.id === completeInplay.id);
 
     if (newEventInCurrentEventsListIndex === -1) {
       filteredCurrentEvents = [...filteredCurrentEvents, completeInplay];
-      console.log('FILTER: ', filteredCurrentEvents);
-
     } else {
       filteredCurrentEvents[newEventInCurrentEventsListIndex] = completeInplay;
     }

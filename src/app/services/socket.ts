@@ -42,15 +42,19 @@ export class SocketService {
     const that = this;
     this.stompClient = Stomp.over(socket);
     this.stompClient.connect({}, () => {
-      this.isConnectedSubject.next(true);
-      this.stompClient.subscribe('/topic/inplay', function (liveEvents: any) {
-        console.log(JSON.parse(liveEvents.body));
-        that.inplayIdSubject.next(JSON.parse(liveEvents.body));
-      });
-
-      this.stompClient.debug = () => {};
+      this.inplayConnectionSetup.bind(that);
     });
   };
+
+  private inplayConnectionSetup(): void {
+    const that = this;
+    this.isConnectedSubject.next(true);
+    this.stompClient.subscribe('/topic/inplay', (liveEvents: any) => {
+      that.inplayIdSubject.next(JSON.parse(liveEvents.body));
+    });
+
+    this.stompClient.debug = () => {};
+  }
 
   disconnectSocket(): void {
     if (this.isSocketConnected()) {
@@ -86,7 +90,6 @@ export class SocketService {
   private setInplayDisplay(marketId: number, inplayEvent: InplayEvent) {
     if (this.isSocketConnected()) {
       this.stompClient.subscribe(`/topic/market/${marketId}`, (market: any) => {
-        
         this.inplayCompleteSubject.next({...JSON.parse(market.body), ...inplayEvent});
       })
     }
