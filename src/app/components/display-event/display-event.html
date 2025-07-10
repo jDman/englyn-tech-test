@@ -3,22 +3,22 @@ bg-gradient-to-r from-emerald-500 to-emerald-800 mb-2">
   <div class="event-info grid grid-cols-4 w-full">
     <p class="px-2">
       <span class="flex w-full justify-between">
-        <span class="py-2 md:px-4 sm:px-2 px-0">{{ homeTeam() }}</span>
-        <span class="py-2 md:px-4 sm:px-2 px-0">{{ homeScore() }}</span>
+        <span class="home-team py-2 md:px-4 sm:px-2 px-0">{{ homeTeam() }}</span>
+        <span class="home-score py-2 md:px-4 sm:px-2 px-0">{{ homeScore() }}</span>
       </span>
       <span class="flex w-full justify-between">
-        <span class="py-2 md:px-4 sm:px-2 px-0">{{ awayTeam() }}</span>
-        <span class="py-2 md:px-4 sm:px-2 px-0">{{ awayScore() }}</span>
+        <span class="away-team py-2 md:px-4 sm:px-2 px-0">{{ awayTeam() }}</span>
+        <span class="away-score py-2 md:px-4 sm:px-2 px-0">{{ awayScore() }}</span>
       </span>
     </p>
     <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">
-      <span>{{ home() }}</span>
+      <span class="home">{{ home() }}</span>
     </p>
     <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">
-      <span>{{ draw() }}</span>
+      <span class="draw">{{ draw() }}</span>
     </p>
     <p class="flex w-full h-full justify-center items-center py-2 md:px-4 sm:px-2 px-0">
-      <span>{{ away() }}</span>
+      <span class="away">{{ away() }}</span>
     </p>
   </div>
 </div>

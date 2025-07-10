@@ -10,8 +10,8 @@
   }
 
   @for (displayEvent of currentEventsToDisplay; track $index) {
-    <app-display-event class="flex w-full" [home]="displayEvent.home" [homeScore]="displayEvent.homeScore"
-      [homeTeam]="displayEvent.homeTeam"
+    <app-display-event class="current-events flex w-full" [home]="displayEvent.home" 
+      [homeScore]="displayEvent.homeScore" [homeTeam]="displayEvent.homeTeam"
       [away]="displayEvent.away" [awayScore]="displayEvent.awayScore"
       [awayTeam]="displayEvent.awayTeam" [draw]="displayEvent.draw"
     >

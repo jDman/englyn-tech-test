@@ -42,19 +42,14 @@ export class SocketService {
     const that = this;
     this.stompClient = Stomp.over(socket);
     this.stompClient.connect({}, () => {
-      this.inplayConnectionSetup.bind(that);
+      this.isConnectedSubject.next(true);
+      this.stompClient.subscribe('/topic/inplay', (liveEvents: any) => {
+        that.inplayIdSubject.next(JSON.parse(liveEvents.body));
+      });
+
+      this.stompClient.debug = () => {};
     });
   };
-
-  private inplayConnectionSetup(): void {
-    const that = this;
-    this.isConnectedSubject.next(true);
-    this.stompClient.subscribe('/topic/inplay', (liveEvents: any) => {
-      that.inplayIdSubject.next(JSON.parse(liveEvents.body));
-    });
-
-    this.stompClient.debug = () => {};
-  }
 
   disconnectSocket(): void {
     if (this.isSocketConnected()) {
