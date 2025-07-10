@@ -5,30 +5,9 @@ import { InplayDisplayEvent } from '../../interfaces/DisplayEvent';
 import { SocketService } from '../../services/socket';
 import { of } from 'rxjs';
 import { DisplayEvent } from '../display-event/display-event';
-
-const mockInplayIds = [{ id: 10 }, { id: 3 }, { id: 4 }];
-const mockExistingInplayEvent: InplayDisplayEvent = {
-  id: 10,
-  homeTeam: "Spurs",
-  awayTeam: "Man City",
-  homeScore: 2,
-  awayScore: 2,
-  marketId: 110,
-  home: "13.85",
-  draw: "8.30",
-  away: "9.55"
-};
-const mockNonExistingInplayEvent: InplayDisplayEvent = {
-  id: 1,
-  homeTeam: "Chelsea",
-  awayTeam: "Fulham",
-  homeScore: 1,
-  awayScore: 1,
-  marketId: 101,
-  home: "9.38",
-  draw: "11.10",
-  away: "13.25"
-};
+import { mockInplayIds } from '../../test-utils/mockInplayIds';
+import { mockExistingInplayEvent } from '../../test-utils/mockExistingInplayEvent';
+import { mockNonExistingInplayEvent } from '../../test-utils/mockNonExistingInplayEvent';
 
 describe('DisplayEvents', () => {
   let component: DisplayEvents;
@@ -96,7 +75,7 @@ describe('DisplayEvents: with existing event', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('it should display market headers initially without data', () => {
+  it('it should display market headers initially without data', () => {
     const fixtureElement = fixture.nativeElement as HTMLElement;
     expect(fixtureElement.querySelector(".market-headers")).toBeTruthy();
   });
