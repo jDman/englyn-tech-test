@@ -1,8 +1,8 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
 
 @Component({
   selector: 'app-display-event',
-  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './display-event.html'
 })
 export class DisplayEvent {
